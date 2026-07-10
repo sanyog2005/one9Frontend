@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Contact from "./pages/Contact/Contact";
 import MyBookings from "./pages/Mybookings/MyBookings";
 import VerifyPaymentPage from "../VerifyPaymentPage"; // <- fixed import path
+import NextRunDetails from "./Pages/BookRun/BookRun";
 
 // ProtectedRoute Component
 const ProtectedRoute = ({ children }) => {
@@ -61,15 +62,15 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cars" element={<Cars />} />
+        <Route path="/nextRun" element={<NextRunDetails />} />
+        <Route path="/merchandise" element={<Cars />} />
         <Route
-          path="/cars/:id"
-          element={
-            <ProtectedRoute>
-              <CarDetail />
-            </ProtectedRoute>
-          }
+          path="/merchandise/:id"
+          element={<CarDetail />}
         />
+        <Route path="/cars" element={<Navigate to="/merchandise" replace />} />
+        <Route path="/cars/:id" element={<Navigate to="/merchandise" replace />} />
+        
 
         <Route
           path="/bookings"

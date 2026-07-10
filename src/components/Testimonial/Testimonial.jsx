@@ -1,112 +1,113 @@
 // src/components/Testimonial.jsx
 import React from 'react';
-import { FaStar, FaQuoteLeft, FaParking, FaMapMarkerAlt, FaShieldAlt, FaUserCheck, FaCity } from 'react-icons/fa';
+import { FaStar, FaRunning, FaMapMarkerAlt, FaBolt, FaUsers, FaGlobe } from 'react-icons/fa';
 import testimonials from './Testimonialdata'; // Ensure this path matches your project
 
 const Testimonial = () => (
-  <div className="relative min-h-screen bg-gray-950 text-gray-100 py-24 overflow-hidden font-sans selection:bg-yellow-500/30">
+  <div className="relative min-h-screen bg-black text-white py-24 md:py-32 overflow-hidden font-sans selection:bg-orange-500 selection:text-black">
     
-    {/* --- Ambient Background Effects --- */}
-    <div className="fixed inset-0 pointer-events-none">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-[128px]"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[128px]"></div>
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
-    </div>
+    {/* --- Premium Film Grain / Noise Overlay --- */}
+    <div 
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.03] mix-blend-overlay" 
+      style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')" }}
+    ></div>
 
-    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* --- Subtle Ambient Orange Glow --- */}
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.15)_0%,transparent_60%)] rounded-full pointer-events-none z-0"></div>
+
+    <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12">
       
-      {/* --- Header --- */}
-      <div className="flex flex-col items-center text-center mb-20 space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold tracking-widest uppercase">
-          <FaUserCheck /> Client Stories
+      {/* --- Cinematic Header --- */}
+      <div className="flex flex-col items-center text-center mb-20 md:mb-28">
+        <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 mb-8 backdrop-blur-md">
+          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+          <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">The Archives</span>
         </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
-          Trusted by <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">Drivers</span>
+        <h1 className="text-5xl md:text-7xl lg:text-[90px] font-bold text-white tracking-tighter leading-[0.9] mb-8 uppercase">
+          Trusted by <br className="hidden md:block" />
+          <span className="text-orange-500 font-serif italic font-light normal-case tracking-normal">Athletes</span>
         </h1>
 
-        <div className="flex items-center justify-center gap-4 w-full max-w-xs opacity-50">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-          <FaParking className="text-yellow-500 text-xl" />
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-        </div>
-
-        <p className="max-w-2xl text-gray-400 text-lg leading-relaxed">
-          Discover why thousands of commuters and travelers rely on ParkKing for secure, convenient, and affordable parking solutions.
+        <p className="max-w-2xl text-white/50 text-base md:text-lg font-medium leading-relaxed">
+          Discover why elite urban runners and high-performance athletes rely on ONE9 for exclusive circuits, premium gear, and an uncompromising community.
         </p>
       </div>
 
-      {/* --- Testimonial Grid --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+      {/* --- Testimonial Grid (Bento Style) --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
         {testimonials.map((t) => (
           <div
             key={t.id}
-            className="group relative flex flex-col h-full bg-gray-900/60 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:border-yellow-500/30 transition-all duration-500 hover:-translate-y-2 shadow-xl"
+            className="group relative flex flex-col h-full bg-[#030303] border border-white/10 rounded-[2rem] p-8 lg:p-10 hover:border-orange-500/50 transition-all duration-500 overflow-hidden shadow-2xl hover:shadow-[0_0_40px_rgba(249,115,22,0.1)]"
           >
+            {/* Hover Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
             {/* Quote Watermark */}
-            <div className="absolute top-6 right-8 text-7xl text-white/5 font-serif leading-none pointer-events-none group-hover:text-yellow-500/10 transition-colors">
+            <div className="absolute top-6 right-8 text-7xl text-white/5 font-serif leading-none pointer-events-none group-hover:text-orange-500/10 transition-colors duration-500">
               &rdquo;
             </div>
 
             {/* Rating */}
-            <div className="flex gap-1 mb-6">
+            <div className="flex gap-1 mb-8 relative z-10">
               {[...Array(5)].map((_, i) => (
                 <FaStar
                   key={i}
-                  className={`w-4 h-4 ${i < t.rating ? 'text-yellow-500' : 'text-gray-800'}`}
+                  className={`w-3.5 h-3.5 ${i < t.rating ? 'text-orange-500' : 'text-white/10'}`}
                 />
               ))}
             </div>
 
             {/* Content */}
-            <blockquote className="flex-1 text-gray-300 text-lg leading-relaxed italic mb-8 relative z-10">
+            <blockquote className="flex-1 text-white/80 text-lg leading-relaxed font-medium mb-8 relative z-10">
               "{t.comment}"
             </blockquote>
 
             {/* Divider */}
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6"></div>
+            <div className="w-full h-px bg-white/10 my-6 relative z-10"></div>
 
             {/* Author & Location */}
-            <div className="flex items-center justify-between mt-auto">
+            <div className="flex items-center justify-between mt-auto relative z-10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 to-black border border-white/10 flex items-center justify-center text-lg font-bold text-yellow-500 shadow-lg">
+                <div className="w-12 h-12 rounded-full border border-white/20 group-hover:border-orange-500 flex items-center justify-center bg-transparent group-hover:bg-black group-hover:text-orange-500 text-white transition-all duration-500 shrink-0 font-serif italic text-xl">
                   {t.name.charAt(0)}
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-sm">{t.name}</h3>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">{t.role}</p>
+                  <h3 className="text-white font-bold text-sm uppercase tracking-wide">{t.name}</h3>
+                  <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-bold mt-0.5">{t.role}</p>
                 </div>
               </div>
               
               {/* Location Tag */}
-              <div className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-gray-500 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-yellow-500/20 group-hover:text-yellow-500 transition-all">
-                <FaMapMarkerAlt />
-                <span>{t.location || t.car || "City Center"}</span>
+              <div className="hidden sm:flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-white/50 bg-white/5 px-3 py-1.5 rounded border border-white/10 group-hover:border-orange-500/30 group-hover:text-orange-500 transition-all duration-500 backdrop-blur-sm">
+                <FaMapMarkerAlt className="w-3 h-3" />
+                <span>{t.location || "Global Chapter"}</span>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* --- Stats Section --- */}
-      <div className="relative rounded-3xl bg-gray-900/80 border border-white/5 backdrop-blur-md p-12 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-20 transform -skew-x-12"></div>
+      {/* --- Premium Stats Section --- */}
+      <div className="relative rounded-[2rem] bg-[#050505] border border-white/10 p-12 overflow-hidden z-10 shadow-2xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.05)_0%,transparent_100%)] z-0"></div>
         
-        <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+        <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-12 text-center divide-x-0 md:divide-x divide-white/10">
           {[
-            { value: '10K+', label: 'Happy Drivers', icon: FaUserCheck },
-            { value: '250+', label: 'Secure Spots', icon: FaParking },
-            { value: '24/7', label: 'Support Team', icon: FaShieldAlt },
-            { value: '50+', label: 'Prime Locations', icon: FaCity },
+            { value: '10K+', label: 'Active Runners', icon: FaUsers },
+            { value: '1.5M+', label: 'Collective KM', icon: FaRunning },
+            { value: '24/7', label: 'Elite Support', icon: FaBolt },
+            { value: '50+', label: 'Global Chapters', icon: FaGlobe },
           ].map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center group">
-              <div className="mb-4 p-3 rounded-xl bg-yellow-500/10 text-yellow-500 group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-gray-900 transition-all duration-300">
-                <stat.icon size={24} />
+              <div className="mb-6 p-4 rounded-full border border-white/10 text-white/50 group-hover:border-orange-500 group-hover:text-orange-500 transition-colors duration-500 bg-black/50 backdrop-blur-sm">
+                <stat.icon size={20} />
               </div>
-              <div className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight">
+              <div className="text-4xl md:text-5xl font-serif italic text-white mb-2 tracking-tight">
                 {stat.value}
               </div>
-              <div className="text-xs font-bold text-gray-500 uppercase tracking-widest group-hover:text-gray-400">
+              <div className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] group-hover:text-white/70 transition-colors duration-300">
                 {stat.label}
               </div>
             </div>
@@ -115,19 +116,20 @@ const Testimonial = () => (
       </div>
 
       {/* --- CTA Section --- */}
-      <div className="mt-24 text-center space-y-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white">
-          Ready to Secure Your Spot?
+      <div className="mt-32 text-center reveal-on-scroll">
+        <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-white mb-4">
+          Ready to Join <span className="font-serif italic text-orange-500 normal-case">The Syndicate?</span>
         </h2>
-        <p className="text-gray-400 max-w-lg mx-auto">
-          Join thousands of satisfied customers. Book your premium parking space today.
+        <p className="text-white/50 font-medium uppercase tracking-widest text-xs mb-10">
+          Join an exclusive network of high-performance runners. Secure your membership today.
         </p>
+        
         <a 
-          href='/cars' 
-          className="inline-flex items-center gap-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 text-lg font-bold py-4 px-10 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] transform hover:-translate-y-1 transition-all duration-300"
+          href='/passes' 
+          className="inline-flex items-center gap-3 bg-white hover:bg-orange-500 text-black text-xs font-bold uppercase tracking-widest py-5 px-10 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] transform hover:-translate-y-1 transition-all duration-500"
         >
-          <FaParking />
-          Book Parking Now
+          <FaRunning className="w-4 h-4" />
+          Get Your Pass
         </a>
       </div>
 

@@ -9,11 +9,10 @@ import {
   FaInstagram, 
   FaLinkedinIn, 
   FaYoutube,
-  FaParking // Added specific parking icon
+  FaShoppingBag
 } from 'react-icons/fa';
-import { MdSecurity } from 'react-icons/md'; // Added for security context
+import { MdSecurity } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-// import logo from '../../assets/logocar.png'; // Commented out: Replace with your parking logo
 import { footerStyles as styles } from '../../assets/dummyStyles';
 
 const Footer = () => {
@@ -33,30 +32,16 @@ const Footer = () => {
           <div className={styles.brandSection}>
             <Link to="/" className="flex items-center">
               <div className={styles.logoContainer}>
-                {/* Replaced Image with Icon for immediate use. 
-                    Uncomment the img tag below if you have a real logo file. */}
-                <FaParking className="text-3xl text-yellow-500 mr-2" />
-                
-                {/* <img
-                  src={logo}
-                  alt="ParkKing logo"
-                  className="h-[1em] w-auto block"
-                  style={{ display: 'block', objectFit: 'contain' }}
-                /> 
-                */}
-                <span className={styles.logoText}>PARKKING</span>
+                <FaShoppingBag className="text-3xl text-orange-500 mr-2" />
+                <span className={styles.logoText}>ONE9 STORE</span>
               </div>
             </Link>
             <p className={styles.description}>
-              Smart, secure, and seamless parking solutions. Reserve your spot instantly and experience hassle-free parking management at your fingertips.
+              Premium fitness merchandise for training, travel, and everyday performance. Discover the latest bags, bottles, shoes, and essentials.
             </p>
             <div className={styles.socialIcons}>
               {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className={styles.socialIcon}
-                >
+                <a key={i} href="/" aria-label="Social link" className={styles.socialIconLink}>
                   <Icon />
                 </a>
               ))}
@@ -72,9 +57,9 @@ const Footer = () => {
             <ul className={styles.linkList}>
               {[
                 { name: 'Home', path: '/' },
-                { name: 'Find Parking', path: '/locations' }, // Changed from Cars
-                { name: 'Pricing', path: '/pricing' },        // Added Pricing
-                { name: 'Support', path: '/contact' }         // Changed from Contact Us
+                { name: 'Shop', path: '/merchandise' },
+                { name: 'Orders', path: '/bookings' },
+                { name: 'Support', path: '/contact' }
               ].map((link, i) => (
                 <li key={i}>
                   <Link 
@@ -102,17 +87,17 @@ const Footer = () => {
               </li>
               <li className={styles.contactItem}>
                 <FaPhone className={styles.contactIcon} />
-                <span>+91 9560231025</span>
+                <span>+91 9999999</span>
               </li>
               <li className={styles.contactItem}>
                 <FaEnvelope className={styles.contactIcon} />
-                <span>support@parkking.com</span>
+                <span>support@me.com</span>
               </li>
             </ul>
             <div className={styles.hoursContainer}>
-              <h4 className={styles.hoursTitle}>Parking Support Hours</h4>
+              <h4 className={styles.hoursTitle}>Store Support Hours</h4>
               <div className={styles.hoursText}>
-                <p>24/7 Emergency Assistance</p>
+                <p>24/7 order help</p>
                 <p>Office: Mon - Fri: 9:00 AM - 6:00 PM</p>
               </div>
             </div>
@@ -125,7 +110,7 @@ const Footer = () => {
               <span className={styles.underline} />
             </h3>
             <p className={styles.newsletterText}>
-              Get alerts on new parking zones and monthly pass discounts.
+              Get alerts on new drops, restocks, and limited-time offers.
             </p>
             <form className="space-y-3">
               <input
@@ -146,7 +131,7 @@ const Footer = () => {
         
         {/* Bottom copyright */}
         <div className={styles.copyright}>
-          <p>© {new Date().getFullYear()} PARKKING. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} ONE9 STORE. All rights reserved.</p>
           <p className="mt-3 md:mt-0">
             Designed by <a 
               href="https://hexagondigitalservices.com" 

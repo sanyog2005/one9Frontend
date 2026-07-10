@@ -44,92 +44,67 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-gray-950 overflow-hidden font-sans text-gray-100 py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+    <div className="relative min-h-screen w-full bg-black overflow-hidden font-sans text-white py-24 md:py-32 flex flex-col items-center selection:bg-orange-500 selection:text-black">
       
-      {/* --- BACKGROUND PATTERNS --- */}
-      
-      {/* 1. Diamond Grid Pattern (Golden/Amber Tint) */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="w-full h-full" style={{
-          backgroundImage: `
-            linear-gradient(30deg, rgba(251, 191, 36, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(251, 191, 36, 0.05) 87.5%, rgba(251, 191, 36, 0.05)),
-            linear-gradient(150deg, rgba(251, 191, 36, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(251, 191, 36, 0.05) 87.5%, rgba(251, 191, 36, 0.05)),
-            linear-gradient(30deg, rgba(251, 191, 36, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(251, 191, 36, 0.05) 87.5%, rgba(251, 191, 36, 0.05)),
-            linear-gradient(150deg, rgba(251, 191, 36, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(251, 191, 36, 0.05) 87.5%, rgba(251, 191, 36, 0.05)),
-            linear-gradient(60deg, rgba(245, 158, 11, 0.05) 25%, transparent 25.5%, transparent 75%, rgba(245, 158, 11, 0.05) 75%, rgba(245, 158, 11, 0.05)),
-            linear-gradient(60deg, rgba(245, 158, 11, 0.05) 25%, transparent 25.5%, transparent 75%, rgba(245, 158, 11, 0.05) 75%, rgba(245, 158, 11, 0.05))`
-          ,
-          backgroundSize: '80px 140px',
-          backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px'
-        }}></div>
-      </div>
+      {/* --- Premium Film Grain / Noise Overlay --- */}
+      <div 
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.03] mix-blend-overlay" 
+        style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')" }}
+      ></div>
 
-      {/* 2. Floating Triangles (Amber Theme) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(12)].map((_, i) => (
-          <div 
-            key={i}
-            className="absolute opacity-10 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 40 + 20}px`,
-              height: `${Math.random() * 40 + 20}px`,
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              background: i % 3 === 0 ? '#fbbf24' : i % 3 === 1 ? '#d97706' : '#f59e0b',
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animationDuration: `${Math.random() * 5 + 3}s`
-            }}
-          ></div>
-        ))}
-      </div>
+      {/* --- Subtle Ambient Orange Glow --- */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.15)_0%,transparent_60%)] rounded-full pointer-events-none z-0"></div>
 
       {/* --- MAIN CONTENT --- */}
-      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-[1400px] px-6 md:px-12 flex flex-col items-center">
         
-        {/* Title Section */}
-        <div className="text-center mb-12 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-             Get in <span className="text-yellow-500">Touch</span>
+        {/* Cinematic Header */}
+        <div className="text-center mb-16 md:mb-24 space-y-4">
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 mb-6 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+            <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">Contact Desk</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-[90px] font-bold text-white tracking-tighter leading-[0.9] uppercase">
+             Get In <br className="hidden md:block" />
+             <span className="text-orange-500 font-serif italic font-light normal-case tracking-normal">Touch</span>
           </h1>
-          <div className="h-1 w-24 bg-yellow-500 mx-auto rounded-full shadow-[0_0_15px_rgba(234,179,8,0.5)]"></div>
-          <p className="text-gray-400 max-w-2xl text-lg mx-auto leading-relaxed">
+          
+          <p className="text-white/50 max-w-2xl text-base md:text-lg mx-auto font-medium leading-relaxed mt-6">
             Have questions about parking spots or long-term leases? Our support team is ready to assist you instantly.
           </p>
         </div>
 
-        {/* Card Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
+        {/* Card Grid (Bento Layout) */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 w-full max-w-6xl mx-auto">
           
           {/* LEFT: Info Card (2 columns wide) */}
-          <div className="lg:col-span-2 relative bg-gray-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 overflow-hidden shadow-2xl group hover:border-yellow-500/30 transition-all duration-500">
-            {/* Decorative background blurs */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-yellow-500/20 transition-all"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+          <div className="lg:col-span-2 relative bg-[#030303] border border-white/10 rounded-[2rem] p-8 lg:p-10 overflow-hidden shadow-2xl group hover:border-orange-500/50 transition-all duration-500">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <div className="relative z-10 space-y-8">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                <div className="p-2 bg-yellow-500/10 rounded-lg text-yellow-500">
-                   <FaMapMarkerAlt /> 
+            <div className="relative z-10 space-y-10 h-full flex flex-col">
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-orange-500 bg-black">
+                   <FaMapMarkerAlt className="w-4 h-4" /> 
                 </div>
                 Contact Info
               </h2>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {[
-                  { icon: FaWhatsapp, label: 'WhatsApp', value: '+91 9560231025', color: 'text-green-400' },
-                  { icon: FaEnvelope, label: 'Email', value: 'contact@parkking.com', color: 'text-yellow-400' },
-                  { icon: FaClock, label: 'Hours', value: 'Mon-Sat: 8AM-8PM', color: 'text-blue-400' },
+                  { icon: FaWhatsapp, label: 'WhatsApp', value: '+91 999' },
+                  { icon: FaEnvelope, label: 'Email', value: 'contact@me.com' },
+                  { icon: FaClock, label: 'Hours', value: 'Mon-Sat: 8AM-8PM' },
                 ].map((info, i) => (
-                  <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
-                    <div className={`mt-1 text-xl ${info.color}`}>
-                      <info.icon />
+                  <div key={i} className="flex items-center gap-5 p-4 rounded-2xl bg-[#0a0a0a] border border-white/5 hover:border-white/20 transition-colors">
+                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/50 group-hover:text-orange-500 transition-colors">
+                      <info.icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">{info.label}</h3>
-                      <p className="text-white font-medium mt-1">
+                      <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1">{info.label}</h3>
+                      <p className="text-white text-sm font-medium">
                         {info.value}
-                        {i === 2 && <span className="block text-gray-500 text-sm mt-1">Sunday: 10AM-6PM</span>}
+                        {i === 2 && <span className="block text-white/30 text-[10px] mt-1 uppercase tracking-wider">Sunday: 10AM-6PM</span>}
                       </p>
                     </div>
                   </div>
@@ -137,12 +112,12 @@ const ContactPage = () => {
               </div>
 
               {/* Special Offer Box */}
-              <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/20 rounded-xl p-5 mt-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <FaCalendarAlt className="text-yellow-500" />
-                  <span className="font-bold text-yellow-100">Monthly Pass Deal</span>
+              <div className="bg-orange-500/10 border border-orange-500/30 rounded-2xl p-6 mt-auto">
+                <div className="flex items-center gap-3 mb-3">
+                  <FaCalendarAlt className="text-orange-500" />
+                  <span className="font-bold text-orange-500 text-xs uppercase tracking-widest">Monthly Pass Deal</span>
                 </div>
-                <p className="text-sm text-yellow-200/80">
+                <p className="text-sm text-white/70 font-medium leading-relaxed">
                   Book a spot for 3+ months and get a 10% discount on your first billing cycle.
                 </p>
               </div>
@@ -150,29 +125,28 @@ const ContactPage = () => {
           </div>
 
           {/* RIGHT: Form Card (3 columns wide) */}
-          <div className="lg:col-span-3 relative bg-gray-800/40 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl">
-            {/* Form Decoration */}
-            <div className="absolute top-10 right-10 w-20 h-20 border-4 border-white/5 rounded-full pointer-events-none"></div>
+          <div className="lg:col-span-3 relative bg-[#050505] border border-white/10 rounded-[2rem] p-8 lg:p-12 shadow-2xl overflow-hidden group hover:border-orange-500/30 transition-colors duration-500">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.02)_0%,transparent_100%)] z-0"></div>
             
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-                <IoIosSend className="text-yellow-500" /> 
+            <div className="relative z-10 mb-10">
+              <h2 className="text-3xl font-bold text-white uppercase tracking-wide flex items-center gap-4">
                 Send Inquiry
+                <IoIosSend className="text-orange-500 w-6 h-6" /> 
               </h2>
-              <p className="text-gray-400 mt-2">Fill out the form and we'll get back to you promptly via WhatsApp.</p>
+              <p className="text-white/40 text-sm font-medium mt-3">Fill out the form and we'll get back to you promptly via WhatsApp.</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Inputs Loop */}
-                {['name', 'email', 'phone', 'carType'].map((field) => {
+                {['name', 'email', 'phone'].map((field) => {
                   const icons = { name: FaUser, email: FaEnvelope, phone: FaPhone, carType: FaCar };
                   const placeholders = { name: 'Full Name', email: 'Email Address', phone: 'Phone Number', carType: 'Vehicle Type' };
                   
                   return (
-                    <div key={field} className="relative group">
-                      <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${activeField === field ? 'text-yellow-500' : 'text-gray-500 group-hover:text-gray-400'}`}>
-                        {React.createElement(icons[field])}
+                    <div key={field} className="relative group/input">
+                      <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${activeField === field ? 'text-orange-500' : 'text-white/30 group-hover/input:text-white/50'}`}>
+                        {React.createElement(icons[field], { className: "w-4 h-4" })}
                       </div>
 
                       {field !== 'carType' ? (
@@ -185,34 +159,38 @@ const ContactPage = () => {
                           onBlur={handleBlur}
                           required
                           placeholder={placeholders[field]}
-                          className={`w-full bg-gray-900/50 border rounded-xl px-4 py-4 pl-12 text-white placeholder-gray-500 outline-none transition-all duration-300 ${
+                          className={`w-full bg-[#0a0a0a] rounded-xl px-5 py-4 pl-12 text-sm text-white placeholder-white/30 outline-none transition-all duration-300 ${
                             activeField === field 
-                              ? 'border-yellow-500 ring-1 ring-yellow-500 bg-gray-900' 
-                              : 'border-gray-700 hover:border-gray-600'
+                              ? 'border border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.15)]' 
+                              : 'border border-white/10 hover:border-white/20'
                           }`}
                         />
                       ) : (
                         <div className="relative">
-                            <select
+                            {/* <select
                             name="carType"
                             value={formData.carType}
                             onChange={handleChange}
                             onFocus={() => handleFocus(field)}
                             onBlur={handleBlur}
                             required
-                            className={`w-full bg-gray-900/50 border rounded-xl px-4 py-4 pl-12 text-white outline-none appearance-none cursor-pointer transition-all duration-300 ${
+                            className={`w-full bg-[#0a0a0a] rounded-xl px-5 py-4 pl-12 text-sm outline-none appearance-none cursor-pointer transition-all duration-300 ${
                                 activeField === field 
-                                ? 'border-yellow-500 ring-1 ring-yellow-500 bg-gray-900' 
-                                : 'border-gray-700 hover:border-gray-600'
+                                ? 'border border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.15)]' 
+                                : formData.carType === '' ? 'border border-white/10 text-white/30 hover:border-white/20' : 'border border-white/10 text-white hover:border-white/20'
                             }`}
                             >
-                            <option value="" className="bg-gray-900 text-gray-400">Select Vehicle</option>
+                            <option value="" disabled hidden>Select Vehicle</option>
                             {["Premium", "Affordable", "Moderate", "Economy", "Luxury"].map((opt) => (
-                                <option key={opt} value={opt} className="bg-gray-800 text-white">
+                                <option key={opt} value={opt} className="bg-[#0a0a0a] text-white">
                                 {opt}
                                 </option>
                             ))}
-                            </select>
+                            </select> */}
+                            {/* Custom Dropdown Arrow */}
+                            {/* <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div> */}
                         </div>
                       )}
                     </div>
@@ -221,9 +199,9 @@ const ContactPage = () => {
               </div>
 
               {/* Message Area */}
-              <div className="relative group">
-                <div className={`absolute left-4 top-5 transition-colors duration-300 ${activeField === 'message' ? 'text-yellow-500' : 'text-gray-500 group-hover:text-gray-400'}`}>
-                  <FaComment />
+              <div className="relative group/input">
+                <div className={`absolute left-5 top-5 transition-colors duration-300 ${activeField === 'message' ? 'text-orange-500' : 'text-white/30 group-hover/input:text-white/50'}`}>
+                  <FaComment className="w-4 h-4" />
                 </div>
                 <textarea
                   name="message"
@@ -234,10 +212,10 @@ const ContactPage = () => {
                   required
                   rows="4"
                   placeholder="Tell us about your requirements..."
-                  className={`w-full bg-gray-900/50 border rounded-xl px-4 py-4 pl-12 text-white placeholder-gray-500 outline-none resize-none transition-all duration-300 ${
+                  className={`w-full bg-[#0a0a0a] rounded-xl px-5 py-4 pl-12 text-sm text-white placeholder-white/30 outline-none resize-none transition-all duration-300 ${
                     activeField === 'message'
-                      ? 'border-yellow-500 ring-1 ring-yellow-500 bg-gray-900' 
-                      : 'border-gray-700 hover:border-gray-600'
+                      ? 'border border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.15)]' 
+                      : 'border border-white/10 hover:border-white/20'
                   }`}
                 />
               </div>
@@ -245,10 +223,10 @@ const ContactPage = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-4 rounded-xl shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 text-lg"
+                className="w-full bg-white hover:bg-orange-500 text-black font-bold uppercase tracking-widest text-xs py-5 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] transform hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-3 mt-4"
               >
                 Send via WhatsApp
-                <FaWhatsapp className="text-2xl" />
+                <FaWhatsapp className="text-lg" />
               </button>
             </form>
           </div>

@@ -3,29 +3,29 @@ const testimonials = [
   {
     id: 1,
     name: "Sarah Johnson",
-    role: "Daily Commuter",
+    role: "Ultra-Marathoner",
     comment:
-      "Finding a spot near my office used to be a nightmare. ParkKing made it effortless! Secure, covered parking every single morning.",
+      "Finding a community that matches my intensity used to be impossible. ONE9 made it effortless. High-octane circuits and elite pacing every single morning.",
     rating: 5,
-    location: "Downtown Metro Hub",
+    location: "London Chapter",
   },
   {
     id: 2,
     name: "Michael Chen",
-    role: "Event Attendee",
+    role: "Urban Sprinter",
     comment:
-      "Booked a spot for the stadium concert ahead of time. No circling blocks for hours! Safe location and super easy QR code entry.",
+      "Secured my pass for the midnight urban sprint. No crowded, generic routes—just a curated, high-performance course with top-tier athletes.",
     rating: 4,
-    location: "Stadium Zone B",
+    location: "Tokyo Node",
   },
   {
     id: 3,
     name: "Emma Rodriguez",
-    role: "Monthly Subscriber",
+    role: "Syndicate Member",
     comment:
-      "The monthly pass is a lifesaver for my apartment overflow parking. 24/7 surveillance gives me total peace of mind at a great price.",
+      "The Elite Pass is a game-changer for my training block. Unparalleled access to exclusive gear drops and private coaching gives me a massive edge.",
     rating: 5,
-    location: "Residential Complex A",
+    location: "New York Chapter",
   },
 ];
 

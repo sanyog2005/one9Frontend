@@ -54,20 +54,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-950 flex items-center justify-center p-4 relative overflow-hidden font-sans selection:bg-yellow-500/30">
+    <div className="min-h-screen w-full bg-gray-950 flex items-center justify-center p-4 relative overflow-hidden font-sans selection:bg-orange-500/30">
       
       {/* --- Ambient Background --- */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-[100px] opacity-50 animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[100px] opacity-50 animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* --- Back Button --- */}
       <Link
         to="/"
-        className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex items-center gap-2 text-gray-400 hover:text-yellow-500 transition-colors group"
+        className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex items-center gap-2 text-gray-400 hover:text-orange-500 transition-colors group"
       >
-        <div className="p-2 rounded-full bg-gray-900/50 border border-gray-800 group-hover:border-yellow-500/50 transition-colors">
+        <div className="p-2 rounded-full bg-gray-900/50 border border-gray-800 group-hover:border-orange-500/50 transition-colors">
             <FaArrowLeft className="text-sm group-hover:-translate-x-1 transition-transform" />
         </div>
         <span className="text-sm font-bold tracking-wide">BACK TO HOME</span>
@@ -77,17 +77,17 @@ const LoginPage = () => {
       <div className="relative z-10 w-full max-w-md bg-gray-900/60 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden animate-fadeInUp">
         
         {/* Decorative Top Border */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
+        <div className="h-1.5 w-full bg-gradient-to-r from-orange-600 via-orange-400 to-orange-600"></div>
 
         <div className="p-8 md:p-10">
           
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-800 to-black border border-white/10 shadow-lg mb-4 group hover:scale-105 transition-transform">
-              <FaParking className="text-3xl text-yellow-500" />
+              <FaParking className="text-3xl text-orange-500" />
             </div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2">
-              Welcome <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">Back</span>
+              Welcome <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Back</span>
             </h1>
             <p className="text-gray-400 text-sm">Access your premium parking dashboard</p>
           </div>
@@ -98,7 +98,7 @@ const LoginPage = () => {
             <div className="space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase ml-1">Email Address</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-orange-500 transition-colors">
                   <FaUser />
                 </div>
                 <input
@@ -108,7 +108,7 @@ const LoginPage = () => {
                   value={credentials.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-950/50 border border-gray-700 text-white rounded-xl py-3.5 pl-11 pr-4 placeholder-gray-600 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all"
+                  className="w-full bg-gray-950/50 border border-gray-700 text-white rounded-xl py-3.5 pl-11 pr-4 placeholder-gray-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                 />
               </div>
             </div>
@@ -117,7 +117,7 @@ const LoginPage = () => {
             <div className="space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase ml-1">Password</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-orange-500 transition-colors">
                   <FaLock />
                 </div>
                 <input
@@ -127,7 +127,7 @@ const LoginPage = () => {
                   value={credentials.password}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-950/50 border border-gray-700 text-white rounded-xl py-3.5 pl-11 pr-12 placeholder-gray-600 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all"
+                  className="w-full bg-gray-950/50 border border-gray-700 text-white rounded-xl py-3.5 pl-11 pr-12 placeholder-gray-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                 />
                 <button
                   type="button"
@@ -146,7 +146,7 @@ const LoginPage = () => {
               className={`w-full py-4 rounded-xl font-bold text-sm tracking-wide uppercase transition-all transform active:scale-[0.98] shadow-lg flex items-center justify-center gap-2 ${
                 loading
                   ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-yellow-500 to-yellow-400 text-gray-900 hover:shadow-yellow-500/25 hover:brightness-110"
+                  : "bg-gradient-to-r from-orange-500 to-orange-400 text-gray-900 hover:shadow-orange-500/25 hover:brightness-110"
               }`}
             >
               {loading ? (

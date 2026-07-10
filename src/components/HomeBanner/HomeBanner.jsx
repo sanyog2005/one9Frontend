@@ -1,8 +1,7 @@
-// src/components/HeroSleek.jsx
 import React, { useEffect, useRef, useState } from "react";
-import { FaSearch, FaArrowRight } from "react-icons/fa"; 
+import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import img1 from "../../assets/hero.png"; 
+import img1 from "../../assets/herooo.jpg";
 
 export default function HeroSleek() {
   const wrapRef = useRef(null);
@@ -56,7 +55,17 @@ export default function HeroSleek() {
   const ty = (mouse.y - 0.5) * 2 * (maxTranslate * 0.55);
 
   return (
-    <div className="relative w-full overflow-hidden bg-gray-900 text-white perspective-1000">
+    <div className="relative w-full overflow-hidden bg-black text-white perspective-1000 font-sans selection:bg-orange-500 selection:text-black">
+      
+      {/* --- Premium Film Grain / Noise Overlay --- */}
+      <div 
+        className="pointer-events-none absolute inset-0 z-50 h-full w-full opacity-[0.03] mix-blend-overlay" 
+        style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')" }}
+      ></div>
+
+      {/* --- Subtle Ambient Orange Glow --- */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(249,115,22,0.15)_0%,transparent_60%)] rounded-full pointer-events-none z-0"></div>
+
       <div
         ref={wrapRef}
         className="relative flex min-h-[90vh] w-full items-center justify-center overflow-hidden"
@@ -74,26 +83,25 @@ export default function HeroSleek() {
         >
           <img
             src={img1}
-            alt="City Parking"
-            className="h-full w-full object-cover opacity-80"
+            alt="Fitness merchandise"
+            className="h-full w-full object-cover opacity-60 grayscale-[0.5]"
           />
           {/* Dark Gradient Overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        {/* 2. ANIMATED SVG LINES (Traffic/Data Flow) - NOW GOLDEN */}
+        {/* 2. ANIMATED SVG LINES (Traffic/Data Flow) - NOW ORANGE */}
         <svg
-          className="pointer-events-none absolute inset-0 z-10 h-full w-full opacity-60 mix-blend-screen"
+          className="pointer-events-none absolute inset-0 z-10 h-full w-full opacity-40 mix-blend-screen"
           viewBox="0 0 1590 900"
           preserveAspectRatio="xMidYMid slice"
         >
           <defs>
             <linearGradient id="gFlow" x1="0" x2="1">
-              {/* Changed stops to Golden Yellows (Amber-400 to Yellow-200) */}
-              <stop offset="0%" stopColor="#d97706" stopOpacity="0" />
-              <stop offset="50%" stopColor="#fbbf24" stopOpacity="1" />
-              <stop offset="100%" stopColor="#fde047" stopOpacity="0" />
+              <stop offset="0%" stopColor="#f97316" stopOpacity="0" />
+              <stop offset="50%" stopColor="#f97316" stopOpacity="1" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
           </defs>
           <path
@@ -117,10 +125,10 @@ export default function HeroSleek() {
 
         {/* 3. MAIN CONTENT CARD */}
         <div 
-            className={`relative z-20 mx-4 max-w-4xl transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+            className={`relative z-20 mx-4 max-w-5xl w-full transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div 
-            className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-2xl md:p-12 text-center md:text-left overflow-hidden relative group"
+            className="rounded-[2rem] border border-white/10 bg-[#050505]/80 p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] md:p-12 text-center md:text-left overflow-hidden relative group hover:border-orange-500/30 transition-colors duration-500"
             style={{
                 transform: `translate3d(${-tx * 0.2}px, ${-ty * 0.2}px, 0)`,
                 transition: "transform 100ms linear",
@@ -129,41 +137,37 @@ export default function HeroSleek() {
             {/* Glossy sheen effect */}
             <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none" />
 
-            <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="flex flex-col md:flex-row items-center gap-12">
                 
                 {/* Text Content */}
-                <div className="flex-1 space-y-6">
-                    {/* Badge: Golden Yellow */}
-                    <div className="inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-300 uppercase tracking-wider backdrop-blur-md">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                <div className="flex-1 space-y-8">
+                    {/* Badge: Premium Orange */}
+                    <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-bold text-orange-500 uppercase tracking-[0.2em] backdrop-blur-md">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500"></span>
                         </span>
-                        Live Availability
+                        Limited Edition Drops
                     </div>
 
-                    <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl">
-                        Smart Parking. <br />
-                        {/* Gradient Text: Metallic Gold effect */}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-600">
-                            Zero Hassle.
-                        </span>
+                    <h1 className="text-5xl md:text-6xl lg:text-[80px] font-bold tracking-tighter text-white uppercase leading-[0.9]">
+                        Official <br />
+                        <span className="font-serif italic text-orange-500 font-light normal-case tracking-normal">Hardware</span>
                     </h1>
 
-                    <p className="max-w-lg text-lg text-gray-300 md:text-xl leading-relaxed">
-                        Join ParkKing to instantly find and book secure spots near you. Save time, save money, and park with confidence.
+                    <p className="max-w-lg text-sm md:text-base text-white/50 font-medium leading-relaxed">
+                        Explore bags, bottles, and training essentials curated for athletes who demand peak performance and uncompromising style.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                         <Link to="/cars">
-                            {/* Primary Button: Yellow background with DARK text for contrast */}
-                            <button className="group relative flex items-center justify-center gap-2 rounded-xl bg-yellow-500 px-8 py-4 text-lg font-bold text-gray-900 transition-all hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-500/25 active:scale-95 w-full sm:w-auto">
-                                Find a Spot
+                         <Link to="/merchandise" className="w-full sm:w-auto">
+                            <button className="group relative flex items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-xs tracking-widest font-bold uppercase text-black transition-all duration-500 hover:bg-orange-500 hover:text-black hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] w-full">
+                            Shop Merchandise
                                 <FaArrowRight className="transition-transform group-hover:translate-x-1" />
                             </button>
                          </Link>
-                         <Link to="/Contact">
-                            <button className="rounded-xl border border-white/20 bg-white/5 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 w-full sm:w-auto">
+                         <Link to="/contact" className="w-full sm:w-auto">
+                            <button className="flex items-center justify-center rounded-full border border-white/20 bg-transparent px-8 py-4 text-xs tracking-widest font-bold uppercase text-white backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/40 w-full">
                                 Contact
                             </button>
                          </Link>
@@ -172,39 +176,39 @@ export default function HeroSleek() {
 
                 {/* Interactive Search/Visual Element (Desktop only) */}
                 <div className="hidden md:block w-80 shrink-0">
-                    <div className="rounded-2xl bg-gradient-to-b from-gray-800 to-gray-900 p-1 shadow-2xl border border-gray-700">
-                        <div className="rounded-xl bg-gray-900 p-5 space-y-4">
-                            <div className="flex items-center justify-between text-gray-400 text-sm mb-2">
-                                <span>Find Location</span>
-                                <span>Filter</span>
+                    <div className="rounded-[2rem] bg-gradient-to-b from-white/10 to-transparent p-[1px] shadow-2xl">
+                        <div className="rounded-[2rem] bg-[#030303] p-6 space-y-5 h-full">
+                            <div className="flex items-center justify-between text-white/40 text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span>Search Gear</span>
+                                <span className="hover:text-orange-500 transition-colors cursor-pointer">Filter</span>
                             </div>
                             
                             {/* Search Input Mockup */}
-                            <div className="flex items-center gap-3 rounded-lg bg-gray-800 p-3 border border-gray-700">
-                                <FaSearch className="text-yellow-500" />
-                                <div className="h-2 w-24 rounded bg-gray-600 animate-pulse"></div>
+                            <div className="flex items-center gap-3 rounded-xl bg-[#0a0a0a] p-3 border border-white/10">
+                                <FaSearch className="text-orange-500" />
+                                <div className="h-1.5 w-24 rounded bg-white/20 animate-pulse"></div>
                             </div>
                             
                             {/* Map/List items Mockup */}
                             <div className="space-y-3">
                                 {[1, 2, 3].map((i) => (
-                                    <div key={i} className="flex items-center gap-3 p-2 rounded hover:bg-gray-800 transition-colors cursor-default">
-                                        <div className="h-8 w-8 rounded bg-yellow-500/20 flex items-center justify-center text-yellow-400 font-bold text-xs">P{i}</div>
-                                        <div className="flex-1 space-y-1">
-                                            <div className="h-2 w-16 rounded bg-gray-600"></div>
-                                            <div className="h-2 w-10 rounded bg-gray-700"></div>
+                                    <div key={i} className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-default">
+                                        <div className="h-10 w-10 rounded-full border border-orange-500/30 bg-orange-500/10 flex items-center justify-center text-orange-500 font-serif italic text-sm">0{i}</div>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="h-1.5 w-16 rounded bg-white/40"></div>
+                                            <div className="h-1.5 w-10 rounded bg-white/20"></div>
                                         </div>
-                                        <div className="text-xs text-green-400 font-mono">$2/h</div>
+                                        <div className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Select</div>
                                     </div>
                                 ))}
                             </div>
-                             <div className="pt-2">
-                                <div className="w-full h-1 bg-gray-700 rounded overflow-hidden">
-                                    <div className="h-full bg-yellow-500 w-2/3"></div>
+                             <div className="pt-4 border-t border-white/10">
+                                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                                    <div className="h-full bg-orange-500 w-2/3"></div>
                                 </div>
-                                <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                                    <span>Loading spots...</span>
-                                    <span>76%</span>
+                                <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-white/40 mt-2">
+                                    <span>Syncing Catalog</span>
+                                    <span className="text-orange-500">66%</span>
                                 </div>
                             </div>
                         </div>

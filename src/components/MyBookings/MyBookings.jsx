@@ -164,7 +164,7 @@ const FilterButton = ({ filterKey, currentFilter, icon, label, onClick }) => (
     onClick={() => onClick(filterKey)}
     className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border ${
       currentFilter === filterKey
-        ? "bg-yellow-500 border-yellow-500 text-gray-900 shadow-lg shadow-yellow-500/20"
+        ? "bg-orange-500 border-orange-500 text-gray-900 shadow-lg shadow-orange-500/20"
         : "bg-gray-900/50 border-white/10 text-gray-400 hover:text-white hover:border-white/20 hover:bg-gray-800"
     }`}
   >
@@ -191,7 +191,7 @@ const StatusBadge = ({ status }) => {
     },
     default: { 
       text: "Pending", 
-      styles: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20", 
+      styles: "bg-orange-500/10 text-orange-400 border-orange-500/20", 
       icon: <FaClock /> 
     },
   };
@@ -208,7 +208,7 @@ const BookingCard = ({ booking, onViewDetails }) => {
   const days = daysBetween(booking.dates.pickup, booking.dates.return);
   
   return (
-    <div className="group relative bg-gray-900/60 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+    <div className="group relative bg-gray-900/60 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden hover:border-orange-500/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
       
       {/* Image Header */}
       <div className="relative h-48 overflow-hidden">
@@ -234,7 +234,7 @@ const BookingCard = ({ booking, onViewDetails }) => {
             </p>
           </div>
           <div className="text-right">
-            <p className="text-lg font-bold text-yellow-500">{formatPrice(booking.price)}</p>
+            <p className="text-lg font-bold text-orange-500">{formatPrice(booking.price)}</p>
             <p className="text-[10px] text-gray-400 uppercase font-medium">
               {days} Day{days > 1 ? "s" : ""}
             </p>
@@ -273,7 +273,7 @@ const BookingCard = ({ booking, onViewDetails }) => {
           </button>
           <Link 
             to="/cars" 
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-yellow-500 text-gray-900 font-bold text-sm hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-500/20"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-orange-500 text-gray-900 font-bold text-sm hover:bg-orange-400 transition-colors shadow-lg shadow-orange-500/20"
           >
             <FaParking /> {booking.status === "upcoming" ? "Modify" : "Rebook"}
           </Link>
@@ -293,7 +293,7 @@ const BookingModal = ({ booking, onClose, onCancel }) => {
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-gray-900/95 backdrop-blur border-b border-white/5">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <FaReceipt className="text-yellow-500" /> Receipt #{booking.id.toString().slice(-6)}
+            <FaReceipt className="text-orange-500" /> Receipt #{booking.id.toString().slice(-6)}
           </h2>
           <button 
             onClick={onClose} 
@@ -332,7 +332,7 @@ const BookingModal = ({ booking, onClose, onCancel }) => {
                     <div className="p-4 rounded-xl bg-gray-800/50 border border-white/5">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-400 text-sm">Total Amount</span>
-                            <span className="text-xl font-bold text-yellow-500">{formatPrice(booking.price)}</span>
+                            <span className="text-xl font-bold text-orange-500">{formatPrice(booking.price)}</span>
                         </div>
                         <div className="flex justify-between items-center text-xs text-gray-500">
                             <span>Payment Method</span>
@@ -369,7 +369,7 @@ const BookingModal = ({ booking, onClose, onCancel }) => {
                     <div>
                         <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Location</h4>
                         <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-                            <div className="mt-1 text-yellow-500"><FaMapMarkerAlt /></div>
+                            <div className="mt-1 text-orange-500"><FaMapMarkerAlt /></div>
                             <p className="text-sm text-gray-300">{booking.location}</p>
                         </div>
                     </div>
@@ -412,7 +412,7 @@ const BookingModal = ({ booking, onClose, onCancel }) => {
                 </button>
                 <Link 
                     to="/cars" 
-                    className="px-6 py-2.5 rounded-xl bg-yellow-500 text-gray-900 text-sm font-bold hover:bg-yellow-400 shadow-lg shadow-yellow-500/20 transition-all flex items-center gap-2"
+                    className="px-6 py-2.5 rounded-xl bg-orange-500 text-gray-900 text-sm font-bold hover:bg-orange-400 shadow-lg shadow-orange-500/20 transition-all flex items-center gap-2"
                 >
                     Book Again <FaArrowRight />
                 </Link>
@@ -426,7 +426,7 @@ const BookingModal = ({ booking, onClose, onCancel }) => {
 // ---------- Main Page Component ----------
 
 const StatsCard = ({ value, label, color }) => (
-  <div className="bg-gray-900/60 backdrop-blur border border-white/5 p-6 rounded-2xl flex flex-col items-center text-center hover:border-yellow-500/20 transition-colors">
+  <div className="bg-gray-900/60 backdrop-blur border border-white/5 p-6 rounded-2xl flex flex-col items-center text-center hover:border-orange-500/20 transition-colors">
     <div className={`text-3xl font-extrabold mb-1 ${color}`}>{value}</div>
     <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{label}</p>
   </div>
@@ -541,11 +541,11 @@ const MyBookings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans pb-20 selection:bg-yellow-500/30">
+    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans pb-20 selection:bg-orange-500/30">
       
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-500/5 rounded-full blur-[120px]"></div>
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]"></div>
       </div>
 
@@ -553,11 +553,11 @@ const MyBookings = () => {
         
         {/* Header */}
         <div className="text-center mb-12 space-y-4">
-          <div className="inline-block px-4 py-1.5 rounded-full border border-yellow-500/20 bg-yellow-500/5 text-yellow-500 text-xs font-bold tracking-widest uppercase">
+          <div className="inline-block px-4 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/5 text-orange-500 text-xs font-bold tracking-widest uppercase">
             User Dashboard
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">Bookings</span>
+            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Bookings</span>
           </h1>
           <p className="max-w-2xl mx-auto text-gray-400 text-lg">
             Track your active sessions, view history, and manage upcoming reservations.
@@ -613,7 +613,7 @@ const MyBookings = () => {
                 ? "You haven't made any bookings yet. Start your journey today!"
                 : `You don't have any ${filter} bookings at the moment.`}
             </p>
-            <Link to="/cars" className="px-8 py-3 rounded-xl bg-yellow-500 text-gray-900 font-bold hover:bg-yellow-400 transition-all shadow-lg shadow-yellow-500/20">
+            <Link to="/cars" className="px-8 py-3 rounded-xl bg-orange-500 text-gray-900 font-bold hover:bg-orange-400 transition-all shadow-lg shadow-orange-500/20">
               Find a Parking Spot
             </Link>
           </div>
@@ -637,7 +637,7 @@ const MyBookings = () => {
           <StatsCard
             value={bookings.length}
             label="Total Bookings"
-            color="text-yellow-500"
+            color="text-orange-500"
           />
           <StatsCard
             value={bookings.filter((b) => b.status === "completed").length}

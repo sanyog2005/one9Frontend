@@ -1,487 +1,192 @@
-// src/components/CarPage.jsx
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FaCar,
-  FaGasPump,
-  FaArrowRight,
-  FaTachometerAlt,
-  FaUserFriends,
-  FaShieldAlt,
-  FaSearch,
-  FaTimes
-} from "react-icons/fa";
+import { FaArrowRight, FaBoxOpen, FaSearch, FaShoppingBag, FaStar } from "react-icons/fa";
 import axios from "axios";
 
-// --- LOGIC CONSTANTS ---
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-const startOfDay = (d) => {
-  const x = new Date(d);
-  x.setHours(0, 0, 0, 0);
-  return x;
+const BASE = "http://localhost:1000";
+const api = axios.create({ baseURL: BASE, headers: { Accept: "application/json" } });
+
+const makeImageUrl = (img) => {
+  if (!img) return "https://via.placeholder.com/800x800.png?text=Fitness+Gear";
+  const value = Array.isArray(img) ? img[0] : img;
+  const trimmed = String(value).trim();
+  if (!trimmed) return "https://via.placeholder.com/800x800.png?text=Fitness+Gear";
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("/")) return `${BASE}${trimmed}`;
+  return `${BASE}/uploads/${trimmed}`;
 };
-const daysBetween = (from, to) =>
-  Math.ceil((startOfDay(to) - startOfDay(from)) / MS_PER_DAY);
 
-const CarPage = () => {
+const currency = (value) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(Number(value || 0));
+
+const ProductPage = () => {
   const navigate = useNavigate();
-
-  const [cars, setCars] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [search, setSearch] = useState(""); // <--- NEW SEARCH STATE
+  const [search, setSearch] = useState("");
+  const abortRef = useRef(null);
 
-  const abortControllerRef = useRef(null);
-  const base = "http://localhost:1000";
-  const limit = 12;
-  const fallbackImage = `${base}/uploads/default-car.png`;
-
-  // --- API FETCH LOGIC ---
-  const fetchCars = async () => {
+  const fetchProducts = async () => {
     setLoading(true);
     setError("");
-    
-    // Cancel previous request if it exists
-    if (abortControllerRef.current) {
-      try {
-        abortControllerRef.current.abort();
-      } catch (e) {}
-    }
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
 
     try {
-      const res = await axios.get(`${base}/api/cars`, {
-        params: { 
-            limit, 
-            search: search // <--- PASSING SEARCH TERM TO BACKEND
-        },
+      abortRef.current?.abort();
+    } catch {
+      // ignore
+    }
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      const res = await api.get("/api/products", {
+        params: { limit: 12, search },
         signal: controller.signal,
-        headers: { Accept: "application/json" },
       });
-
-      const json = res.data;
-      setCars(Array.isArray(json.data) ? json.data : json.data ?? json);
+      setProducts(Array.isArray(res.data?.data) ? res.data.data : []);
     } catch (err) {
-      const isCanceled =
-        err?.code === "ERR_CANCELED" ||
-        (axios.isCancel && axios.isCancel(err)) ||
-        err?.name === "CanceledError";
-      if (isCanceled) return;
-
-      console.error("Failed to fetch cars:", err);
-      setError(
-        err?.response?.data?.message || err.message || "Failed to load cars"
-      );
-    } finally {
-      // Only turn off loading if this wasn't cancelled
-      if (!controller.signal.aborted) {
-        setLoading(false);
+      if (err?.name !== "CanceledError" && err?.code !== "ERR_CANCELED") {
+        setError(err?.response?.data?.message || err.message || "Failed to load merchandise");
       }
+    } finally {
+      if (!controller.signal.aborted) setLoading(false);
     }
   };
 
-  // --- EFFECT: DEBOUNCED SEARCH ---
   useEffect(() => {
-    // Wait 500ms after user stops typing before fetching
-    const delayDebounceFn = setTimeout(() => {
-      fetchCars();
-    }, 500);
-
+    const timer = setTimeout(fetchProducts, 300);
     return () => {
-      clearTimeout(delayDebounceFn);
-      if (abortControllerRef.current) {
-        try {
-           abortControllerRef.current.abort(); 
-        } catch(e) {}
+      clearTimeout(timer);
+      try {
+        abortRef.current?.abort();
+      } catch {
+        // ignore
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]); // Re-run when 'search' changes
+  }, [search]);
 
-  // --- HELPER FUNCTIONS ---
-  const buildImageSrc = (image) => {
-    if (!image) return "";
-    if (Array.isArray(image)) image = image[0];
-    if (typeof image !== "string") return "";
+  const featuredCount = useMemo(() => products.filter((product) => product.featured).length, [products]);
 
-    const trimmed = image.trim();
-    if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-      return trimmed;
-    }
-    if (trimmed.startsWith("/")) {
-      return `${base}${trimmed}`;
-    }
-    return `${base}/uploads/${trimmed}`;
-  };
-
-  const handleImageError = (e) => {
-    const img = e?.target;
-    if (!img) return;
-    img.onerror = null;
-    img.src = fallbackImage;
-    img.alt = img.alt || "Image not available";
-    img.style.objectFit = img.style.objectFit || "cover";
-  };
-
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "—";
-    try {
-      const d = new Date(dateStr);
-      const now = new Date();
-      const opts =
-        d.getFullYear() === now.getFullYear()
-          ? { day: "numeric", month: "short" }
-          : { day: "numeric", month: "short", year: "numeric" };
-      return new Intl.DateTimeFormat("en-IN", opts).format(d);
-    } catch {
-      return dateStr;
-    }
-  };
-
-  const plural = (n, singular, pluralForm) => {
-    if (n === 1) return `1 ${singular}`;
-    return `${n} ${pluralForm ?? singular + "s"}`;
-  };
-
-  const computeEffectiveAvailability = (car) => {
-    const today = new Date();
-
-    if (Array.isArray(car.bookings) && car.bookings.length) {
-      const overlapping = car.bookings
-        .map((b) => {
-          const pickup = b.pickupDate ?? b.startDate ?? b.start ?? b.from;
-          const ret = b.returnDate ?? b.endDate ?? b.end ?? b.to;
-          if (!pickup || !ret) return null;
-          return { pickup: new Date(pickup), return: new Date(ret), raw: b };
-        })
-        .filter(Boolean)
-        .filter(
-          (b) =>
-            startOfDay(b.pickup) <= startOfDay(today) &&
-            startOfDay(today) <= startOfDay(b.return)
-        );
-
-      if (overlapping.length > 0) {
-        overlapping.sort((a, b) => b.return - a.return);
-        return {
-          state: "booked",
-          until: overlapping[0].return.toISOString(),
-          source: "bookings",
-        };
-      }
-    }
-
-    if (car.availability) {
-      if (car.availability.state === "booked" && car.availability.until) {
-        return {
-          state: "booked",
-          until: car.availability.until,
-          source: "availability",
-        };
-      }
-
-      if (
-        car.availability.state === "available_until_reservation" &&
-        Number(car.availability.daysAvailable ?? -1) === 0
-      ) {
-        return {
-          state: "booked",
-          until: car.availability.until ?? null,
-          source: "availability-res-starts-today",
-          nextBookingStarts: car.availability.nextBookingStarts,
-        };
-      }
-
-      return { ...car.availability, source: "availability" };
-    }
-
-    return { state: "fully_available", source: "none" };
-  };
-
-  const computeAvailableMeta = (untilIso) => {
-    if (!untilIso) return null;
-    try {
-      const until = new Date(untilIso);
-      const available = new Date(until);
-      available.setDate(available.getDate() + 1);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const daysUntilAvailable = daysBetween(today, available);
-      return { availableIso: available.toISOString(), daysUntilAvailable };
-    } catch {
-      return null;
-    }
-  };
-
-  // --- RENDER FUNCTIONS ---
-  const renderAvailabilityBadge = (rawAvailability, car) => {
-    const effective = computeEffectiveAvailability(car);
-    const badgeBase = "px-3 py-1 text-xs font-bold rounded-full border backdrop-blur-md shadow-lg";
-    const availableStyle = "bg-green-500/10 text-green-400 border-green-500/20";
-    const bookedStyle = "bg-red-500/10 text-red-400 border-red-500/20";
-    const warningStyle = "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
-
-    if (!effective) {
-      return <span className={`${badgeBase} ${availableStyle}`}>Available</span>;
-    }
-
-    if (effective.state === "booked") {
-      if (effective.until) {
-        const meta = computeAvailableMeta(effective.until);
-        if (meta && meta.availableIso) {
-          return (
-            <div className="flex flex-col items-end">
-              <span className={`${badgeBase} ${bookedStyle}`}>
-                Booked
-              </span>
-              <small className="text-[10px] text-yellow-500 font-medium mt-1 bg-gray-900/80 px-2 py-0.5 rounded border border-yellow-500/20">
-                Free on {formatDate(meta.availableIso)}
-              </small>
-            </div>
-          );
-        }
-        return (
-          <div className="flex flex-col items-end">
-            <span className={`${badgeBase} ${bookedStyle}`}>Booked</span>
-            <small className="text-[10px] text-gray-400 mt-1 bg-black/50 px-2 rounded">
-              until {formatDate(effective.until)}
-            </small>
-          </div>
-        );
-      }
-      return <span className={`${badgeBase} ${bookedStyle}`}>Booked</span>;
-    }
-
-    if (effective.state === "available_until_reservation") {
-      const days = Number(effective.daysAvailable ?? -1);
-      if (!Number.isFinite(days) || days < 0) {
-        return (
-          <div className="flex flex-col items-end">
-            <span className={`${badgeBase} ${warningStyle}`}>Available</span>
-            {effective.nextBookingStarts && (
-              <small className="text-[10px] text-gray-400 mt-1">
-                Booked from {formatDate(effective.nextBookingStarts)}
-              </small>
-            )}
-          </div>
-        );
-      }
-      if (days === 0) {
-        return (
-          <div className="flex flex-col items-end">
-            <span className={`${badgeBase} ${bookedStyle}`}>
-              Booked (Starts Today)
-            </span>
-          </div>
-        );
-      }
-      return (
-        <div className="flex flex-col items-end">
-          <span className={`${badgeBase} ${warningStyle}`}>
-            Available ({plural(days, "day")})
-          </span>
-          {effective.nextBookingStarts && (
-            <small className="text-[10px] text-gray-400 mt-1 bg-black/50 px-2 rounded">
-              until {formatDate(effective.nextBookingStarts)}
-            </small>
-          )}
-        </div>
-      );
-    }
-
-    return <span className={`${badgeBase} ${availableStyle}`}>Available</span>;
-  };
-
-  const isBookDisabled = (car) => {
-    const effective = computeEffectiveAvailability(car);
-    if (car?.status && car.status !== "available") return true;
-    if (!effective) return false;
-    return effective.state === "booked";
-  };
-
-  const handleBook = (car, id) => {
-    const disabled = isBookDisabled(car);
-    if (disabled) return;
-    navigate(`/cars/${id}`, { state: { car } });
-  };
-
-  // --- MAIN UI ---
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans selection:bg-yellow-500/30">
-      
-      {/* Background Decor */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-         <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
-         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        
-        {/* Header Section */}
-        <div className="text-center mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-semibold tracking-wide uppercase">
-             <FaCar /> Premium Parking
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-             Find Your Perfect <span className="text-yellow-500">Spot</span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-gray-400 text-lg">
-             Discover our exclusive collection of premium vehicles and parking spots.
-          </p>
-        </div>
-
-        {/* --- SEARCH BAR --- */}
-        <div className="max-w-xl mx-auto mb-16 relative z-30 group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <FaSearch className="text-gray-500 group-focus-within:text-yellow-500 transition-colors" />
+    <main className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.12),transparent_40%),linear-gradient(180deg,#050505_0%,#0b0b0b_100%)] text-white">
+      <section className="mx-auto max-w-7xl px-4 pb-12 pt-28 sm:px-6 lg:px-8">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-orange-300">
+              <FaShoppingBag /> Fitness merchandise
             </div>
-            <input
-                type="text"
-                placeholder="Search by location..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-gray-900/80 backdrop-blur-xl border border-gray-700 text-white placeholder-gray-500 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all shadow-lg shadow-black/20"
-            />
-            {search && (
-                <button 
-                    onClick={() => setSearch("")}
-                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors"
-                >
-                    <FaTimes />
-                </button>
-            )}
+            <h1 className="mt-6 text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
+              Train hard.
+              <span className="block bg-gradient-to-r from-orange-200 via-orange-400 to-amber-600 bg-clip-text text-transparent">
+                Shop harder.
+              </span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/65 sm:text-lg">
+              Bags, bottles, shoes, and performance essentials for everyday athletes. Browse the latest drops and buy directly from the storefront.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45">Products live</div>
+              <div className="mt-2 text-3xl font-black text-white">{products.length}</div>
+            </div>
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45">Featured picks</div>
+              <div className="mt-2 text-3xl font-black text-orange-400">{featuredCount}</div>
+            </div>
+          </div>
         </div>
 
-        {/* Loading Skeletons */}
-        {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={`skeleton-${i}`} className="bg-gray-900 border border-gray-800 rounded-2xl p-4 h-[450px] animate-pulse flex flex-col gap-4">
-                <div className="w-full h-48 bg-gray-800 rounded-xl" />
-                <div className="h-6 bg-gray-800 rounded w-2/3" />
-                <div className="h-4 bg-gray-800 rounded w-1/3" />
-                <div className="flex gap-2 mt-4">
-                    <div className="h-10 bg-gray-800 rounded flex-1" />
-                    <div className="h-10 bg-gray-800 rounded flex-1" />
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="flex flex-1 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl">
+            <FaSearch className="text-orange-400" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full bg-transparent text-white outline-none placeholder:text-white/35"
+              placeholder="Search bags, bottles, shoes, apparel..."
+            />
+          </div>
+          <button
+            type="button"
+            onClick={fetchProducts}
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-6 py-3 font-bold text-black transition-transform hover:scale-[1.01]"
+          >
+            Refresh catalog <FaArrowRight />
+          </button>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        {loading && <div className="py-24 text-center text-white/60">Loading merchandise...</div>}
+        {error && !loading && <div className="py-16 text-center text-red-300">{error}</div>}
+
+        {!loading && !error && products.length === 0 && (
+          <div className="rounded-3xl border border-white/10 bg-white/5 py-20 text-center">
+            <FaBoxOpen className="mx-auto text-4xl text-orange-400" />
+            <h2 className="mt-4 text-2xl font-bold">No products found</h2>
+            <p className="mt-2 text-white/55">Add a product in the admin panel to make it appear here.</p>
+          </div>
+        )}
+
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {products.map((product) => {
+            const image = makeImageUrl(product.image);
+            const displayPrice = currency(product.price);
+            const comparePrice = product.compareAtPrice ? currency(product.compareAtPrice) : "";
+
+            return (
+              <article key={product._id} className="group overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30">
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <img src={image} alt={product.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  {product.featured && (
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-black">
+                      <FaStar /> Featured
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
 
-        {/* Error State */}
-        {!loading && error && (
-          <div className="text-center py-20 bg-red-500/5 border border-red-500/10 rounded-2xl">
-            <p className="text-red-400 text-lg font-medium">{error}</p>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && !error && cars.length === 0 && (
-          <div className="text-center py-20 bg-gray-900/50 border border-gray-800 rounded-2xl">
-             <FaSearch className="text-4xl text-gray-600 mx-auto mb-4" />
-             <p className="text-gray-400 text-lg">
-                {search ? `No cars found matching "${search}"` : "No parking spots available at the moment."}
-             </p>
-          </div>
-        )}
-
-        {/* Cars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {!loading &&
-            cars.map((car, idx) => {
-              const id = car._id ?? car.id ?? idx;
-              const carName =
-                `${car.make || car.name || ""} ${car.name || ""}`.trim() ||
-                car.name ||
-                "Unnamed";
-              const imageSrc = buildImageSrc(car.image) || fallbackImage;
-              const disabled = isBookDisabled(car);
-
-              return (
-                <div
-                  key={id}
-                  className="group relative bg-gray-900/60 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/10 hover:-translate-y-1"
-                >
-                  {/* Image Section */}
-                  <div className="relative h-56 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
-                    <img
-                      src={imageSrc}
-                      alt={carName}
-                      onError={handleImageError}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-
-                    {/* Top Badges */}
-                    <div className="absolute top-4 right-4 z-20 flex flex-col items-end gap-2">
-                      {renderAvailabilityBadge(car.availability, car)}
+                <div className="p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-orange-400">{product.category}</p>
+                  <div className="mt-2 flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{product.name}</h3>
+                      <p className="mt-1 text-sm text-white/55">{product.brand || "ONE9 Fitness"}</p>
                     </div>
-                    
-                    <div className="absolute top-4 left-4 z-20">
-                         <span className="px-3 py-1 text-xs font-bold bg-gray-950/80 backdrop-blur text-white rounded-lg border border-white/10">
-                            {car.category ?? "Standard"}
-                         </span>
-                    </div>
-
-                    {/* Price Badge */}
-                    <div className="absolute bottom-4 left-4 z-20">
-                      <div className="flex items-baseline gap-1 text-white">
-                        <span className="text-lg font-bold text-yellow-500">₹{car.dailyRate ?? "—"}</span>
-                        <span className="text-sm text-gray-400">/day</span>
-                      </div>
+                    <div className="text-right">
+                      <div className="text-xl font-black text-white">{displayPrice}</div>
+                      {comparePrice && <div className="text-xs text-white/40 line-through">{comparePrice}</div>}
                     </div>
                   </div>
 
-                  {/* Content Section */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-4 group-hover:text-yellow-500 transition-colors truncate">
-                        {carName}
-                    </h3>
+                  <p className="mt-4 line-clamp-2 text-sm text-white/60">{product.description || "Premium gear built for training, travel, and recovery."}</p>
 
-                    {/* Specs Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                      <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5">
-                        <FaUserFriends className="text-blue-400" />
-                        <span className="text-xs text-gray-300 font-medium">{car.seats ?? "4"} Seater</span>
-                      </div>
-                      <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5">
-                        <FaGasPump className="text-yellow-400" />
-                        <span className="text-xs text-gray-300 font-medium">{car.fuelType ?? "Petrol"}</span>
-                      </div>
-                      <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5">
-                        <FaTachometerAlt className="text-green-400" />
-                        <span className="text-xs text-gray-300 font-medium">{car.mileage ? `${car.mileage} kmpl` : "—"}</span>
-                      </div>
-                      <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5">
-                        <FaShieldAlt className="text-purple-400" />
-                        <span className="text-xs text-gray-300 font-medium">Insured</span>
-                      </div>
-                    </div>
-
-                    {/* Action Button */}
+                  <div className="mt-5 flex items-center justify-between gap-3">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/40">Stock {Number(product.stock ?? 0)}</span>
                     <button
-                      onClick={() => handleBook(car, id)}
-                      disabled={disabled}
-                      className={`w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all duration-300 ${
-                        disabled
-                          ? "bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700"
-                          : "bg-yellow-500 hover:bg-yellow-400 text-gray-900 shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 transform active:scale-95"
-                      }`}
-                      title={disabled ? "Currently unavailable" : "Book this spot"}
+                      type="button"
+                      onClick={() => navigate(`/merchandise/${product._id}`)}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-orange-500 hover:bg-orange-500 hover:text-black"
                     >
-                      <span>{disabled ? "Unavailable" : "Book Now"}</span>
-                      {!disabled && <FaArrowRight />}
+                      View product <FaArrowRight className="text-xs" />
                     </button>
                   </div>
                 </div>
-              );
-            })}
+              </article>
+            );
+          })}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
-export default CarPage;
+export default ProductPage;

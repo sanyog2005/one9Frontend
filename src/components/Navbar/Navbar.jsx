@@ -1,8 +1,7 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaParking } from "react-icons/fa";
-// import logo from "../../assets/logocar.png"; // Replaced with Icon for better UI, uncomment if needed
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingBag } from "react-icons/fa";
 import axios from "axios";
 
 // Constants (Kept exactly as requested)
@@ -37,10 +36,16 @@ const Navbar = () => {
   });
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/cars", label: "Parking Spots" }, // Updated label for UI context
-    { to: "/contact", label: "contact" },        // Added for UI completeness
-    { to: "/bookings", label: "My Spots" },
+    { to: "http://localhost:4321", label: "Home" },
+    { to: "/", label: "Most Selling" },
+    { to: "/merchandise", label: "Merchandise" },
+    // { to: "/contact", label: "Contact" },
+    
+    { to: "/nextRun", label: "Events" },
+
+    { to: "/bookings", label: "My Orders" },
+
+
   ];
 
   useEffect(() => {
@@ -218,11 +223,11 @@ const Navbar = () => {
           
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-2 group">
-             <div className="bg-yellow-500 p-2 rounded-lg text-gray-900 transition-transform group-hover:scale-105 shadow-lg shadow-yellow-500/20">
-                <FaParking className="text-xl" />
+             <div className="bg-orange-500 p-2 rounded-lg text-gray-900 transition-transform group-hover:scale-105 shadow-lg shadow-orange-500/20">
+               <FaShoppingBag className="text-xl" />
              </div>
              <span className="text-2xl font-bold tracking-tight text-white">
-               Park<span className="text-yellow-500">King</span>
+              ONE9<span className="text-orange-500">Store</span>
              </span>
           </Link>
 
@@ -234,7 +239,7 @@ const Navbar = () => {
                 to={link.to}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isActive(link.to)
-                    ? "bg-yellow-500 text-gray-900 shadow-md shadow-yellow-500/20 font-bold"
+                    ? "bg-orange-500 text-gray-900 shadow-md shadow-orange-500/20 font-bold"
                     : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`}
               >
@@ -249,7 +254,7 @@ const Navbar = () => {
               <div className="flex items-center gap-4">
                 <div className="text-right hidden xl:block">
                     <p className="text-xs text-white">Welcome back,</p>
-                    <p className="text-sm font-semibold text-yellow-500">{user?.name || ""}</p>
+                    <p className="text-sm font-semibold text-orange-500">{user?.name || ""}</p>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -263,7 +268,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-6 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 hover:-translate-y-0.5"
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-gray-900 px-6 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5"
                 aria-label="Login"
               >
                 <FaUser />
@@ -277,7 +282,7 @@ const Navbar = () => {
             <button
               ref={buttonRef}
               onClick={() => setIsOpen((p) => !p)}
-              className="text-gray-300 hover:text-yellow-500 p-2 focus:outline-none transition-colors"
+              className="text-gray-300 hover:text-orange-500 p-2 focus:outline-none transition-colors"
               aria-expanded={isOpen}
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
@@ -305,7 +310,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className={`block px-4 py-3 rounded-xl text-base font-medium transition-all ${
                   isActive(link.to)
-                    ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                    ? "bg-orange-500/10 text-orange-400 border border-orange-500/20"
                     : "text-gray-300 hover:text-white hover:bg-white/5"
                 }`}
               >
@@ -320,7 +325,7 @@ const Navbar = () => {
             {isLoggedIn ? (
               <div className="space-y-3">
                  <div className="px-4 text-gray-400 text-sm">
-                    Logged in as <span className="text-yellow-500 font-semibold">{user?.name}</span>
+                    Logged in as <span className="text-orange-500 font-semibold">{user?.name}</span>
                  </div>
                 <button
                   onClick={handleLogout}
@@ -334,7 +339,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
-                className="w-full flex items-center justify-center gap-2 bg-yellow-500 text-gray-900 hover:bg-yellow-400 py-3 rounded-xl font-bold shadow-lg shadow-yellow-500/20 transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-orange-500 text-gray-900 hover:bg-orange-400 py-3 rounded-xl font-bold shadow-lg shadow-orange-500/20 transition-all"
               >
                 <FaUser />
                 Login / Sign Up
