@@ -12,6 +12,7 @@ import Contact from "./pages/Contact/Contact";
 import MyBookings from "./pages/Mybookings/MyBookings";
 import VerifyPaymentPage from "../VerifyPaymentPage"; // <- fixed import path
 import NextRunDetails from "./Pages/BookRun/BookRun";
+import EventBookPage from "./Pages/EventBook/EventBook"; // <- fixed import path
 
 // ProtectedRoute Component
 const ProtectedRoute = ({ children }) => {
@@ -77,6 +78,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <MyBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/eventbook"
+          element={
+            <ProtectedRoute>
+              <EventBookPage />
             </ProtectedRoute>
           }
         />
