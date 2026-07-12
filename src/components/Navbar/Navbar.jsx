@@ -42,7 +42,7 @@ const Navbar = () => {
     // { to: "/contact", label: "Contact" },
     
     { to: "/nextRun", label: "Events" },
-
+    { to: "/memberships", label: "Memberships" },
     { to: "/bookings", label: "My Orders" },
 
 
@@ -213,7 +213,7 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${
         scrolled
-          ? "bg-gray-900/95 backdrop-blur-md shadow-lg py-3 border-b border-white/10"
+          ? "bg-gray-50/95 backdrop-blur-md shadow-lg py-3 border-b border-black/10"
           : "bg-transparent py-5"
       }`}
       aria-label="Main navigation"
@@ -226,13 +226,13 @@ const Navbar = () => {
              <div className="bg-orange-500 p-2 rounded-lg text-gray-900 transition-transform group-hover:scale-105 shadow-lg shadow-orange-500/20">
                <FaShoppingBag className="text-xl" />
              </div>
-             <span className="text-2xl font-bold tracking-tight text-white">
-              ONE9<span className="text-orange-500">Store</span>
+             <span className="text-2xl font-bold tracking-tight text-black">
+              Arise The Run Club<span className="text-orange-500">Store</span>
              </span>
           </Link>
 
           {/* DESKTOP LINKS */}
-          <div className="hidden lg:flex items-center gap-1 bg-white/5 rounded-full px-2 py-1 backdrop-blur-sm border border-white/10">
+          <div className="hidden lg:flex items-center gap-1 bg-black/5 rounded-full px-2 py-1 backdrop-blur-sm border border-black/10">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -240,7 +240,7 @@ const Navbar = () => {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isActive(link.to)
                     ? "bg-orange-500 text-gray-900 shadow-md shadow-orange-500/20 font-bold"
-                    : "text-gray-300 hover:text-white hover:bg-white/10"
+                    : "text-gray-700 hover:text-black hover:bg-black/10"
                 }`}
               >
                 {link.label}
@@ -253,12 +253,19 @@ const Navbar = () => {
             {isLoggedIn ? (
               <div className="flex items-center gap-4">
                 <div className="text-right hidden xl:block">
-                    <p className="text-xs text-white">Welcome back,</p>
+                    <p className="text-xs text-black">Welcome back,</p>
                     <p className="text-sm font-semibold text-orange-500">{user?.name || ""}</p>
                 </div>
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-2 border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
+                >
+                  <FaUser />
+                  <span>Profile</span>
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
+                  className="flex items-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-black px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
                   aria-label="Logout"
                 >
                   <FaSignOutAlt />
@@ -282,7 +289,7 @@ const Navbar = () => {
             <button
               ref={buttonRef}
               onClick={() => setIsOpen((p) => !p)}
-              className="text-gray-300 hover:text-orange-500 p-2 focus:outline-none transition-colors"
+              className="text-gray-700 hover:text-orange-500 p-2 focus:outline-none transition-colors"
               aria-expanded={isOpen}
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
@@ -296,7 +303,7 @@ const Navbar = () => {
       <div
         id="mobile-menu"
         ref={menuRef}
-        className={`lg:hidden absolute top-full left-0 w-full bg-gray-900/95 backdrop-blur-xl border-b border-white/10 shadow-2xl transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`lg:hidden absolute top-full left-0 w-full bg-gray-50/95 backdrop-blur-xl border-b border-black/10 shadow-2xl transition-all duration-300 ease-in-out overflow-hidden ${
           isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
         aria-hidden={!isOpen}
@@ -311,7 +318,7 @@ const Navbar = () => {
                 className={`block px-4 py-3 rounded-xl text-base font-medium transition-all ${
                   isActive(link.to)
                     ? "bg-orange-500/10 text-orange-400 border border-orange-500/20"
-                    : "text-gray-300 hover:text-white hover:bg-white/5"
+                    : "text-gray-700 hover:text-black hover:bg-black/5"
                 }`}
               >
                 {link.label}
@@ -319,7 +326,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="h-px bg-white/10 my-4" />
+          <div className="h-px bg-black/10 my-4" />
 
           <div>
             {isLoggedIn ? (
@@ -327,13 +334,24 @@ const Navbar = () => {
                  <div className="px-4 text-gray-400 text-sm">
                     Logged in as <span className="text-orange-500 font-semibold">{user?.name}</span>
                  </div>
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white py-3 rounded-xl font-medium transition-all"
-                >
-                  <FaSignOutAlt />
-                  Logout
-                </button>
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full flex items-center justify-center gap-2 border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-4 py-3 rounded-lg font-medium transition-colors mb-3"
+                  >
+                    <FaUser />
+                    <span>Profile</span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-gray-900 px-4 py-3 rounded-lg font-medium transition-colors"
+                  >
+                    <FaSignOutAlt />
+                    <span>Logout</span>
+                  </button>
               </div>
             ) : (
               <Link

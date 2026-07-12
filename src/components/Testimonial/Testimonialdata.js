@@ -5,7 +5,7 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Ultra-Marathoner",
     comment:
-      "Finding a community that matches my intensity used to be impossible. ONE9 made it effortless. High-octane circuits and elite pacing every single morning.",
+      "Finding a community that matches my intensity used to be impossible. Arise The Run Club made it effortless. High-octane circuits and elite pacing every single morning.",
     rating: 5,
     location: "London Chapter",
   },

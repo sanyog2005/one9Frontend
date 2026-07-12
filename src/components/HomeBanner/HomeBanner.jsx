@@ -55,7 +55,7 @@ export default function HeroSleek() {
   const ty = (mouse.y - 0.5) * 2 * (maxTranslate * 0.55);
 
   return (
-    <div className="relative w-full overflow-hidden bg-black text-white perspective-1000 font-sans selection:bg-orange-500 selection:text-black">
+    <div className="relative w-full overflow-hidden bg-white text-black perspective-1000 font-sans selection:bg-orange-500 selection:text-black">
       
       {/* --- Premium Film Grain / Noise Overlay --- */}
       <div 
@@ -88,7 +88,7 @@ export default function HeroSleek() {
           />
           {/* Dark Gradient Overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-white/40" />
         </div>
 
         {/* 2. ANIMATED SVG LINES (Traffic/Data Flow) - NOW ORANGE */}
@@ -128,7 +128,7 @@ export default function HeroSleek() {
             className={`relative z-20 mx-4 max-w-5xl w-full transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div 
-            className="rounded-[2rem] border border-white/10 bg-[#050505]/80 p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] md:p-12 text-center md:text-left overflow-hidden relative group hover:border-orange-500/30 transition-colors duration-500"
+            className="rounded-[2rem] border border-black/10 bg-white/80 p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] md:p-12 text-center md:text-left overflow-hidden relative group hover:border-orange-500/30 transition-colors duration-500"
             style={{
                 transform: `translate3d(${-tx * 0.2}px, ${-ty * 0.2}px, 0)`,
                 transition: "transform 100ms linear",
@@ -150,12 +150,12 @@ export default function HeroSleek() {
                         Limited Edition Drops
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl lg:text-[80px] font-bold tracking-tighter text-white uppercase leading-[0.9]">
+                    <h1 className="text-5xl md:text-6xl lg:text-[80px] font-bold tracking-tighter text-black uppercase leading-[0.9]">
                         Official <br />
                         <span className="font-serif italic text-orange-500 font-light normal-case tracking-normal">Hardware</span>
                     </h1>
 
-                    <p className="max-w-lg text-sm md:text-base text-white/50 font-medium leading-relaxed">
+                    <p className="max-w-lg text-sm md:text-base text-black/50 font-medium leading-relaxed">
                         Explore bags, bottles, and training essentials curated for athletes who demand peak performance and uncompromising style.
                     </p>
 
@@ -167,7 +167,7 @@ export default function HeroSleek() {
                             </button>
                          </Link>
                          <Link to="/contact" className="w-full sm:w-auto">
-                            <button className="flex items-center justify-center rounded-full border border-white/20 bg-transparent px-8 py-4 text-xs tracking-widest font-bold uppercase text-white backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/40 w-full">
+                            <button className="flex items-center justify-center rounded-full border border-black/20 bg-transparent px-8 py-4 text-xs tracking-widest font-bold uppercase text-black backdrop-blur-sm transition-all duration-500 hover:bg-black/10 hover:border-black/40 w-full">
                                 Contact
                             </button>
                          </Link>
@@ -178,35 +178,35 @@ export default function HeroSleek() {
                 <div className="hidden md:block w-80 shrink-0">
                     <div className="rounded-[2rem] bg-gradient-to-b from-white/10 to-transparent p-[1px] shadow-2xl">
                         <div className="rounded-[2rem] bg-[#030303] p-6 space-y-5 h-full">
-                            <div className="flex items-center justify-between text-white/40 text-[10px] font-bold uppercase tracking-widest mb-2">
+                            <div className="flex items-center justify-between text-black/40 text-[10px] font-bold uppercase tracking-widest mb-2">
                                 <span>Search Gear</span>
                                 <span className="hover:text-orange-500 transition-colors cursor-pointer">Filter</span>
                             </div>
                             
                             {/* Search Input Mockup */}
-                            <div className="flex items-center gap-3 rounded-xl bg-[#0a0a0a] p-3 border border-white/10">
+                            <div className="flex items-center gap-3 rounded-xl bg-white p-3 border border-black/10">
                                 <FaSearch className="text-orange-500" />
-                                <div className="h-1.5 w-24 rounded bg-white/20 animate-pulse"></div>
+                                <div className="h-1.5 w-24 rounded bg-black/20 animate-pulse"></div>
                             </div>
                             
                             {/* Map/List items Mockup */}
                             <div className="space-y-3">
                                 {[1, 2, 3].map((i) => (
-                                    <div key={i} className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-default">
+                                    <div key={i} className="flex items-center gap-4 p-2 rounded-lg hover:bg-black/5 transition-colors cursor-default">
                                         <div className="h-10 w-10 rounded-full border border-orange-500/30 bg-orange-500/10 flex items-center justify-center text-orange-500 font-serif italic text-sm">0{i}</div>
                                         <div className="flex-1 space-y-2">
                                             <div className="h-1.5 w-16 rounded bg-white/40"></div>
-                                            <div className="h-1.5 w-10 rounded bg-white/20"></div>
+                                            <div className="h-1.5 w-10 rounded bg-black/20"></div>
                                         </div>
                                         <div className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Select</div>
                                     </div>
                                 ))}
                             </div>
-                             <div className="pt-4 border-t border-white/10">
-                                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                             <div className="pt-4 border-t border-black/10">
+                                <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
                                     <div className="h-full bg-orange-500 w-2/3"></div>
                                 </div>
-                                <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-white/40 mt-2">
+                                <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-black/40 mt-2">
                                     <span>Syncing Catalog</span>
                                     <span className="text-orange-500">66%</span>
                                 </div>

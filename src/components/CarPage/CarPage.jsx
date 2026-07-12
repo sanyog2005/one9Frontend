@@ -74,7 +74,7 @@ const ProductPage = () => {
   const featuredCount = useMemo(() => products.filter((product) => product.featured).length, [products]);
 
   return (
-    <main className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.12),transparent_40%),linear-gradient(180deg,#050505_0%,#0b0b0b_100%)] text-white">
+    <main className="relative min-h-screen bg-white text-black">
       <section className="mx-auto max-w-7xl px-4 pb-12 pt-28 sm:px-6 lg:px-8">
         <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
@@ -93,11 +93,11 @@ const ProductPage = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+            <div className="rounded-3xl border border-black/10 bg-black/5 p-5 backdrop-blur-xl">
               <div className="text-xs uppercase tracking-[0.22em] text-white/45">Products live</div>
-              <div className="mt-2 text-3xl font-black text-white">{products.length}</div>
+              <div className="mt-2 text-3xl font-black text-black">{products.length}</div>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+            <div className="rounded-3xl border border-black/10 bg-black/5 p-5 backdrop-blur-xl">
               <div className="text-xs uppercase tracking-[0.22em] text-white/45">Featured picks</div>
               <div className="mt-2 text-3xl font-black text-orange-400">{featuredCount}</div>
             </div>
@@ -105,12 +105,12 @@ const ProductPage = () => {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex flex-1 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl">
+          <div className="flex flex-1 items-center gap-3 rounded-2xl border border-black/10 bg-black/5 px-4 py-3 backdrop-blur-xl">
             <FaSearch className="text-orange-400" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-transparent text-white outline-none placeholder:text-white/35"
+              className="w-full bg-transparent text-black outline-none placeholder:text-white/35"
               placeholder="Search bags, bottles, shoes, apparel..."
             />
           </div>
@@ -125,14 +125,14 @@ const ProductPage = () => {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        {loading && <div className="py-24 text-center text-white/60">Loading merchandise...</div>}
+        {loading && <div className="py-24 text-center text-black/60">Loading merchandise...</div>}
         {error && !loading && <div className="py-16 text-center text-red-300">{error}</div>}
 
         {!loading && !error && products.length === 0 && (
-          <div className="rounded-3xl border border-white/10 bg-white/5 py-20 text-center">
+          <div className="rounded-3xl border border-black/10 bg-black/5 py-20 text-center">
             <FaBoxOpen className="mx-auto text-4xl text-orange-400" />
             <h2 className="mt-4 text-2xl font-bold">No products found</h2>
-            <p className="mt-2 text-white/55">Add a product in the admin panel to make it appear here.</p>
+            <p className="mt-2 text-black/50">Add a product in the admin panel to make it appear here.</p>
           </div>
         )}
 
@@ -143,7 +143,7 @@ const ProductPage = () => {
             const comparePrice = product.compareAtPrice ? currency(product.compareAtPrice) : "";
 
             return (
-              <article key={product._id} className="group overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30">
+              <article key={product._id} className="group overflow-hidden rounded-[2rem] border border-black/10 bg-black/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30">
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <img src={image} alt={product.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
@@ -158,23 +158,23 @@ const ProductPage = () => {
                   <p className="text-xs font-bold uppercase tracking-[0.22em] text-orange-400">{product.category}</p>
                   <div className="mt-2 flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-xl font-bold text-white">{product.name}</h3>
-                      <p className="mt-1 text-sm text-white/55">{product.brand || "ONE9 Fitness"}</p>
+                      <h3 className="text-xl font-bold text-black">{product.name}</h3>
+                      <p className="mt-1 text-sm text-black/50">{product.brand || "Arise The Run Club Fitness"}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-black text-white">{displayPrice}</div>
-                      {comparePrice && <div className="text-xs text-white/40 line-through">{comparePrice}</div>}
+                      <div className="text-xl font-black text-black">{displayPrice}</div>
+                      {comparePrice && <div className="text-xs text-black/40 line-through">{comparePrice}</div>}
                     </div>
                   </div>
 
-                  <p className="mt-4 line-clamp-2 text-sm text-white/60">{product.description || "Premium gear built for training, travel, and recovery."}</p>
+                  <p className="mt-4 line-clamp-2 text-sm text-black/60">{product.description || "Premium gear built for training, travel, and recovery."}</p>
 
                   <div className="mt-5 flex items-center justify-between gap-3">
-                    <span className="text-xs uppercase tracking-[0.2em] text-white/40">Stock {Number(product.stock ?? 0)}</span>
+                    <span className="text-xs uppercase tracking-[0.2em] text-black/40">Stock {Number(product.stock ?? 0)}</span>
                     <button
                       type="button"
                       onClick={() => navigate(`/merchandise/${product._id}`)}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-orange-500 hover:bg-orange-500 hover:text-black"
+                      className="inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-black transition-colors hover:border-orange-500 hover:bg-orange-500 hover:text-black"
                     >
                       View product <FaArrowRight className="text-xs" />
                     </button>

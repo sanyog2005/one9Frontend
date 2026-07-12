@@ -47,14 +47,26 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    zipCode: "",
+  const [formData, setFormData] = useState(() => {
+    let defaultName = "";
+    let defaultEmail = "";
+    try {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        defaultName = user.name || "";
+        defaultEmail = user.email || "";
+      }
+    } catch (e) {}
+    return {
+      name: defaultName,
+      email: defaultEmail,
+      phone: "",
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    };
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -160,36 +172,36 @@ const ProductDetailPage = () => {
   };
 
   if (loading && !product) {
-    return <div className="min-h-screen bg-black flex items-center justify-center text-orange-400">Loading product...</div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center text-orange-400">Loading product...</div>;
   }
 
   if (error && !product) {
-    return <div className="min-h-screen bg-black flex items-center justify-center text-red-300">{error}</div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center text-red-300">{error}</div>;
   }
 
   if (!product) {
-    return <div className="min-h-screen bg-black flex items-center justify-center text-white/60">Product not found.</div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center text-black/60">Product not found.</div>;
   }
 
   const sizes = Array.isArray(product.sizes) && product.sizes.length ? product.sizes : ["One Size"];
   const colors = Array.isArray(product.colors) && product.colors.length ? product.colors : ["Default"];
 
   return (
-    <main className="min-h-screen bg-black text-white pb-20">
+    <main className="min-h-screen bg-white text-black pb-20">
       <ToastContainer theme="dark" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-xl hover:border-orange-500/40 hover:text-white"
+          className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-4 py-2 text-sm font-medium text-black/80 backdrop-blur-xl hover:border-orange-500/40 hover:text-black"
         >
           <FaArrowLeft /> Back
         </button>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="space-y-4">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5">
+            <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-black/5">
               <img src={makeImageUrl(gallery[selectedImage] || product.image)} alt={product.name} className="h-[520px] w-full object-cover" />
             </div>
             <div className="grid grid-cols-4 gap-3">
@@ -197,7 +209,7 @@ const ProductDetailPage = () => {
                 <button
                   key={`${img}-${index}`}
                   type="button"
-                  className={`overflow-hidden rounded-2xl border ${selectedImage === index ? "border-orange-500" : "border-white/10"} bg-white/5`}
+                  className={`overflow-hidden rounded-2xl border ${selectedImage === index ? "border-orange-500" : "border-black/10"} bg-black/5`}
                   onClick={() => setSelectedImage(index)}
                 >
                   <img src={makeImageUrl(img)} alt={`${product.name} ${index + 1}`} className="h-24 w-full object-cover opacity-85" />
@@ -206,12 +218,12 @@ const ProductDetailPage = () => {
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+          <section className="rounded-[2rem] border border-black/10 bg-black/5 p-6 backdrop-blur-xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-orange-300">
               <FaShoppingBag /> {product.category}
             </div>
             <h1 className="mt-4 text-4xl font-black tracking-tight">{product.name}</h1>
-            <p className="mt-2 text-white/60">
+            <p className="mt-2 text-black/60">
               {product.description || "Premium fitness merchandise built for performance and everyday carry."}
             </p>
 
@@ -221,40 +233,40 @@ const ProductDetailPage = () => {
             </div>
 
             <div className="mt-6 grid grid-cols-3 gap-3 text-sm">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-3 text-center">
+              <div className="rounded-2xl border border-black/10 bg-black/20 p-3 text-center">
                 <FaShieldAlt className="mx-auto text-orange-400" />
-                <div className="mt-2 text-white/60">Secure checkout</div>
+                <div className="mt-2 text-black/60">Secure checkout</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-3 text-center">
+              <div className="rounded-2xl border border-black/10 bg-black/20 p-3 text-center">
                 <FaTruck className="mx-auto text-orange-400" />
-                <div className="mt-2 text-white/60">Fast shipping</div>
+                <div className="mt-2 text-black/60">Fast shipping</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-3 text-center">
+              <div className="rounded-2xl border border-black/10 bg-black/20 p-3 text-center">
                 <FaCheckCircle className="mx-auto text-orange-400" />
-                <div className="mt-2 text-white/60">Quality assured</div>
+                <div className="mt-2 text-black/60">Quality assured</div>
               </div>
             </div>
 
             <form onSubmit={handleCheckout} className="mt-8 space-y-5">
               <div className="grid gap-4 sm:grid-cols-2">
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Your name" value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Email" type="email" value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Street address" value={formData.street} onChange={(e) => setFormData((prev) => ({ ...prev, street: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="City" value={formData.city} onChange={(e) => setFormData((prev) => ({ ...prev, city: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="State" value={formData.state} onChange={(e) => setFormData((prev) => ({ ...prev, state: e.target.value }))} />
-                <input className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500 sm:col-span-2" placeholder="ZIP code" value={formData.zipCode} onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Your name" value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Email" type="email" value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="Street address" value={formData.street} onChange={(e) => setFormData((prev) => ({ ...prev, street: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="City" value={formData.city} onChange={(e) => setFormData((prev) => ({ ...prev, city: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" placeholder="State" value={formData.state} onChange={(e) => setFormData((prev) => ({ ...prev, state: e.target.value }))} />
+                <input className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500 sm:col-span-2" placeholder="ZIP code" value={formData.zipCode} onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))} />
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <select className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+                <select className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
                   {sizes.map((size) => (
                     <option key={size} value={size}>
                       {size}
                     </option>
                   ))}
                 </select>
-                <select className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+                <select className="w-full rounded-2xl border border-black/10 bg-black/30 px-4 py-3 outline-none focus:border-orange-500" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
                   {colors.map((color) => (
                     <option key={color} value={color}>
                       {color}
@@ -263,16 +275,16 @@ const ProductDetailPage = () => {
                 </select>
               </div>
 
-              <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/25 p-4">
+              <div className="flex items-center justify-between gap-4 rounded-2xl border border-black/10 bg-black/20 p-4">
                 <div>
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Quantity</div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-black/40">Quantity</div>
                   <div className="mt-1 text-lg font-bold">{quantity}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-xl">
+                  <button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="h-10 w-10 rounded-full border border-black/10 bg-black/5 text-xl">
                     -
                   </button>
-                  <button type="button" onClick={() => setQuantity((value) => value + 1)} className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-xl">
+                  <button type="button" onClick={() => setQuantity((value) => value + 1)} className="h-10 w-10 rounded-full border border-black/10 bg-black/5 text-xl">
                     +
                   </button>
                 </div>

@@ -33,7 +33,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center">
               <div className={styles.logoContainer}>
                 <FaShoppingBag className="text-3xl text-orange-500 mr-2" />
-                <span className={styles.logoText}>ONE9 STORE</span>
+                <span className={styles.logoText}>Arise The Run Club</span>
               </div>
             </Link>
             <p className={styles.description}>
@@ -131,7 +131,7 @@ const Footer = () => {
         
         {/* Bottom copyright */}
         <div className={styles.copyright}>
-          <p>© {new Date().getFullYear()} ONE9 STORE. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Arise The Run Club. All rights reserved.</p>
           <p className="mt-3 md:mt-0">
             Designed by <a 
               href="https://hexagondigitalservices.com" 

@@ -13,6 +13,8 @@ import MyBookings from "./pages/Mybookings/MyBookings";
 import VerifyPaymentPage from "../VerifyPaymentPage"; // <- fixed import path
 import NextRunDetails from "./Pages/BookRun/BookRun";
 import EventBookPage from "./Pages/EventBook/EventBook"; // <- fixed import path
+import Memberships from "./pages/Memberships/Memberships";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 // ProtectedRoute Component
 const ProtectedRoute = ({ children }) => {
@@ -65,6 +67,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/nextRun" element={<NextRunDetails />} />
         <Route path="/merchandise" element={<Cars />} />
+        <Route path="/memberships" element={<Memberships />} />
         <Route
           path="/merchandise/:id"
           element={<CarDetail />}
@@ -78,6 +81,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <MyBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />
@@ -123,7 +134,7 @@ const App = () => {
           onClick={scrollUp}
           title="Scroll to top"
           aria-label="Scroll to top"
-          className="fixed cursor-pointer bottom-8 right-8 p-3 rounded-full bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg transition-colors focus:outline-none"
+          className="fixed cursor-pointer bottom-8 right-8 p-3 rounded-full bg-gradient-to-r from-orange-600 to-orange-700 text-black shadow-lg transition-colors focus:outline-none"
         >
           <FaArrowUp size={20} aria-hidden="true" />
         </button>

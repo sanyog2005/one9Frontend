@@ -7,11 +7,11 @@ import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
   return (
-    <div className="bg-black">
+    <div className="bg-white">
       <Navbar/>
       <HomeBanner/>
       <HomeCars/>
-      <Testimonial/>
+      {/* <Testimonial/> */}
       <Footer/>
     </div>
   )
